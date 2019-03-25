@@ -30,6 +30,18 @@ function displayButtons() {
     }
 }
 
+function toggleAnimation(clickedGif) {    
+    var gif = clickedGif;
+        
+    if (gif.attr("data-state") === "still") {
+        gif.attr("src", gif.attr("data-animate"));        
+        gif.attr("data-state", "animate");        
+    } else {
+        gif.attr("src", gif.attr("data-still"));
+        gif.attr("data-state", "still");
+    }
+}
+
 function searchForTopic(topicButton) {
     
     var searchText = topicButton.replace(/\s/g, "+");
@@ -48,10 +60,15 @@ function searchForTopic(topicButton) {
             // console.log(element);            
             var boringCard = $("<div>").css({'width': (element.images.fixed_height.width + 'px')});
             var gifCard = $("<div>").addClass("uk-card uk-card-default");
-            var gifImage = $("<img>").attr("src", element.images.fixed_height.url);
+            var gifImage = $("<img>").attr("src", element.images.fixed_height_still.url);
+            gifImage.addClass("gif");
+            gifImage.attr("data-state", "still");
+            gifImage.attr("data-still", element.images.fixed_height_still.url);
+            gifImage.attr("data-animate", element.images.fixed_height.url);
             var imageWrapper = $("<div>").addClass("uk-card-media-top").append(gifImage);
-            var gifLabel = $("<p>").text(element.title);
-            var labelWrapper = $("<div>").addClass("uk-card-body").append(gifLabel);
+            var gifLabel = $("<h3>").text(element.title).addClass("uk-card-title");
+            var gifRating = $("<p>").text("Rated: " + element.rating);
+            var labelWrapper = $("<div>").addClass("uk-card-body").append(gifLabel, gifRating);
     
             gifCard.append(imageWrapper, labelWrapper);
             boringCard.append(gifCard);
@@ -72,6 +89,9 @@ $(document).ready(function () {
     });
 
     $(document.body).on("click", ".topic-btn", function() {searchForTopic($(this).text());});
+    $(document.body).on("click", ".gif", function() {
+        toggleAnimation($(this));
+    });
     
     $("#root").addClass("uk-container").append(buttonsWrapper, hr, gifsWrapper);
 });
