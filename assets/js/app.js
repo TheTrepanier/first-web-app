@@ -17,7 +17,6 @@ var apiParameter = "?api_key=" + apiKey;
 
 function displayButtons() {
     buttonsWrapper.empty();
-    // console.log(buttons);
     
     for (let index = 0; index < buttons.length; index++) {
         const element = buttons[index];
@@ -73,7 +72,6 @@ function searchForTopic(topicButton) {
             gifCard.append(imageWrapper, labelWrapper);
             boringCard.append(gifCard);
             gifsWrapper.prepend(boringCard);
-            
         }
     });    
 }
@@ -82,8 +80,9 @@ $(document).ready(function () {
     masthead.text("Hello, bb!");
     $("#navbar").prepend(masthead);
     displayButtons();
-    $("#add-button").on("click", function(){
-        var topicToAdd = $("#custom-topic").val();    
+
+    $("#add").on("click", function() {
+        var topicToAdd = $("#custom-topic").val();
         buttons.push(topicToAdd);
         displayButtons();
     });
