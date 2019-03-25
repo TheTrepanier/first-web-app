@@ -84,7 +84,18 @@ $(document).ready(function () {
     $("#add").on("click", function() {
         var topicToAdd = $("#custom-topic").val();
         buttons.push(topicToAdd);
+        $("#custom-topic").empty();
         displayButtons();
+    });
+
+    $("#custom-topic").keyup(function(event) {
+
+        if (event.keyCode == 13) {
+            var topicToAdd = $("#custom-topic").val();
+            buttons.push(topicToAdd);
+            $("#custom-topic").empty();
+            displayButtons();
+        }
     });
 
     $(document.body).on("click", ".topic-btn", function() {searchForTopic($(this).text());});
